@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    List<Product> products;
+    private List<Product> products;
 
     public ShoppingCart (){
         products = new ArrayList<>();
@@ -13,14 +13,6 @@ public class ShoppingCart {
 
     public void addProduct(Product product){
         products.add(product);
-    }
-
-    public double calculateTotalPrice(){
-        double totalPrice = 0;
-        for (Product product : products){
-            totalPrice += product.getPrice();
-        }
-        return totalPrice;
     }
 
     public int calculateAppleQuantity(){

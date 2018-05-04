@@ -17,8 +17,9 @@ import java.math.BigDecimal;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final double APPLE_PRICE = 0.60;
+    public static final double APPLE_PRICE = 0.30;
     public static final double ORANGE_PRICE = 0.25;
+
     private String currency;
     private ShoppingCart shoppingCart;
 
@@ -81,13 +82,18 @@ public class MainActivity extends AppCompatActivity {
                     case "Apple":
 
                         shoppingCart.addProduct(new Apple(APPLE_PRICE));
+                        shoppingCart.addProduct(new Apple(APPLE_PRICE));
                         updateGUI(appleView, appleQuantityView,
                                 shoppingCart.calculateAppleQuantity());
                         break;
 
                     case "Orange":
+                            shoppingCart.addProduct(new Orange(ORANGE_PRICE));
+                            int orangeQuantity = shoppingCart.calculateOrangeQuantity();
+                            if (orangeQuantity %3 == 2 ){
+                                shoppingCart.addProduct(new Orange(ORANGE_PRICE));
+                            }
 
-                        shoppingCart.addProduct(new Orange(ORANGE_PRICE));
                         updateGUI(orangeView, orangeQuantityView,
                                 shoppingCart.calculateOrangeQuantity());
                         break;
@@ -100,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
         productView.setVisibility(View.VISIBLE);
         quantityView.setVisibility(View.VISIBLE);
         quantityView.setText(String.valueOf(productQuantity));
+        int orangesFromDiscount = shoppingCart.calculateOrangeQuantity() / 3;
         BigDecimal totalPrice = BigDecimal.valueOf(
-                shoppingCart.calculateTotalPrice())
+                shoppingCart.calculateAppleQuantity() * APPLE_PRICE +
+                        shoppingCart.calculateOrangeQuantity() * ORANGE_PRICE -
+                        orangesFromDiscount * ORANGE_PRICE)
                 .setScale(2, BigDecimal.ROUND_HALF_EVEN);
         totalPriceView.setText(String.valueOf(totalPrice));
     }
